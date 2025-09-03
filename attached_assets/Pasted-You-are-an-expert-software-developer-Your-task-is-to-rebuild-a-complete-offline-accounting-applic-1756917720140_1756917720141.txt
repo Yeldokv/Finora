@@ -1,0 +1,110 @@
+You are an expert software developer. Your task is to rebuild a complete **offline accounting application** originally written in Visual Basic 6 (VB6), and now reimplement it as a **modern Android mobile application**.  
+
+## High-Level Requirements
+- Platform: Android mobile app (target Android 10+).  
+- Tech stack: React Native with TypeScript **OR** Native Android (Kotlin/Java). You may choose whichever is best for offline performance.  
+- Database: Local only (no internet). Use **SQLite** or Android **Room** for data storage.  
+- UI: Professional, business-like, not flashy. Simple, clear layouts suitable for accountants/business users.  
+- Behavior: All business logic must exactly replicate the original VB6 software. No feature changes, no skipped validations, no new workflows.  
+
+---
+
+## Application Features (from VB6 analysis)
+
+### Core Modules
+1. **Billing / Sales**
+   - `frmBillForm` and `frmSalesNew`
+   - Create, edit, and delete invoices.
+   - Add customer details, item details, quantity, price, discounts, and taxes.
+   - Stock update logic on invoice creation/cancellation.
+   - Validation: only last invoice can be deleted.
+   - Print/export invoice (PDF).
+   - GST support (calculation and storage of tax %).
+
+2. **Purchase**
+   - `frmPurchase`
+   - Record vendor purchases with item, rate, tax, and quantities.
+   - Update stock accordingly.
+
+3. **Ledger**
+   - `frmLedgerNew`
+   - Ledger entry and viewing.
+   - Shows credit/debit balances.
+   - Linked with invoices and purchase modules.
+
+4. **Reports**
+   - `frmBSheet`, `frmPLAccount`, `frmTrialBalance`
+   - Balance Sheet, Profit & Loss, and Trial Balance reports.
+   - Reports auto-compute totals from transactions.
+   - GST returns (`frmGSTR1`) with export capability.
+
+5. **Year Management**
+   - `frmCreateNewFYr`
+   - Create new financial year (generates fresh database/tables).
+   - Archive old year’s data but still allow read-only access.
+
+---
+
+## Database Schema (inferred from VB6 SQL snippets)
+- **Customers**: CustomerID, Name, Address, GSTIN, Phone, Email.  
+- **Vendors**: VendorID, Name, Address, GSTIN, Phone, Email.  
+- **Items (Inventory)**: ItemID, Name, HSN, Qty, Rate, Tax %, Opening Stock, Closing Stock.  
+- **Invoices**: InvoiceID, Date, CustomerID, TotalAmount, TaxAmount, GrandTotal.  
+- **InvoiceItems**: InvoiceItemID, InvoiceID, ItemID, Qty, Rate, Tax %, Subtotal.  
+- **Purchases**: PurchaseID, VendorID, Date, TotalAmount, TaxAmount, GrandTotal.  
+- **PurchaseItems**: PurchaseItemID, PurchaseID, ItemID, Qty, Rate, Tax %, Subtotal.  
+- **Ledger**: LedgerID, LinkedID (InvoiceID or PurchaseID), Debit, Credit, Balance, Date.  
+- **Users (optional)**: Username, Password (local auth only).  
+
+---
+
+## User Interface Design
+- Navigation: Tab-based or side-drawer (Home, Sales, Purchase, Ledger, Reports, Settings).  
+- Forms:  
+  - Use professional layouts with labels + input fields.  
+  - Provide dropdowns for customer/vendor selection.  
+  - Date picker for dates.  
+  - Numeric keyboard for amounts.  
+- Reports:  
+  - Simple tabular layouts with export-to-PDF option.  
+  - Summary at bottom (totals, balances).  
+
+---
+
+## Functional Requirements
+- All forms must work offline.  
+- CRUD operations on Sales, Purchases, Customers, Vendors, Items, and Ledger.  
+- Stock updates automatically when invoices/purchases are saved.  
+- Financial year rollover supported.  
+- GST tax calculation (CGST, SGST, IGST).  
+- Validation rules from VB6 preserved (e.g., cannot delete invoices except last).  
+- Export invoices and reports as PDFs.  
+
+---
+
+## Non-Functional Requirements
+- Must run entirely offline.  
+- Must be stable with thousands of records.  
+- Must have clean error handling (no crashes).  
+- Must provide backup/restore of SQLite database file.  
+
+---
+
+## Implementation Notes
+- Use SQLite/Room schema matching the above tables.  
+- Migrate VB6 event handler logic into equivalent React Native/Kotlin handlers.  
+- For printing/export, use a PDF generation library.  
+- Ensure that field names, validation messages, and flow match VB6 exactly.  
+
+---
+
+## Deliverables
+- Complete Android application source code.  
+- Database schema (SQLite/Room).  
+- All UI screens for Sales, Purchase, Ledger, Reports, and Year Management.  
+- PDF export functionality.  
+- Full migration of all VB6 logic into modern code.  
+
+---
+
+**Now, generate the complete Android application with all of the above features, logic, and UI. The resulting app must be functionally identical to the original VB6 software but written in modern code.**
